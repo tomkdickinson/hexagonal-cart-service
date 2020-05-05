@@ -1,5 +1,7 @@
 package cart
 
+import "log"
+
 type Cart struct {
 	Id    string
 	items map[string]int
@@ -18,6 +20,7 @@ func (c *Cart) AddItem(sku string, quantityToAdd int) {
 	} else {
 		c.items[sku] = quantityInCart + quantityToAdd
 	}
+	log.Printf("Added %d of item %s to cart", quantityToAdd, sku)
 }
 
 func (c Cart) Items() map[string]int {

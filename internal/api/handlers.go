@@ -38,7 +38,7 @@ func (a Handlers) AddItem(w http.ResponseWriter, r *http.Request) {
 		sendErrorResponse(w)
 	}
 	if c, err := a.service.AddItemToCart(id, sku, quantity); err != nil {
-		log.Print(err)
+		log.Println(err)
 		sendErrorResponse(w)
 	} else {
 		response := newCartResponse(c)

@@ -9,13 +9,25 @@ import (
 	"github.com/tomkdickinson/hexagonal-cart-service/internal/api"
 	"github.com/tomkdickinson/hexagonal-cart-service/internal/cart"
 	"github.com/tomkdickinson/hexagonal-cart-service/internal/storage/file"
+	"github.com/tomkdickinson/hexagonal-cart-service/internal/storage/mongo"
 )
 
 // Injectors from inject_app.go:
 
+func handlersWithMongoStorage() (*api.Handlers, error) {
+	collection, err := mongo.ProvideCollection()
+	if err != nil {
+		return nil, err
+	}
+	repository := mongo.ProvideRepository(collection)
+	service := cart.ProvideService(repository)
+	handlers := api.ProvideHandlers(service)
+	return handlers, nil
+}
+
 func handlersWithFileStorage() (*api.Handlers, error) {
-	cartRepository := file.ProvideCartRepository()
-	service := cart.ProvideService(cartRepository)
+	repository := file.ProvideRepository()
+	service := cart.ProvideService(repository)
 	handlers := api.ProvideHandlers(service)
 	return handlers, nil
 }

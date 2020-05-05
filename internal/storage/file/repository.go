@@ -5,20 +5,19 @@ import (
 	"fmt"
 	"github.com/tomkdickinson/hexagonal-cart-service/internal/cart"
 	"io/ioutil"
+	"log"
 	"os"
 )
 
-type CartRepository struct {
-	saveLocation string
+const saveLocation = "cart_storage.json"
+
+type Repository struct {
 }
 
-func ProvideCartRepository() CartRepository {
-	saveLocation := os.Getenv("STORAGE_FILE_LOCATION")
-	if saveLocation == "" {
-		saveLocation = "cart_storage.json"
-	}
-	c := CartRepository{saveLocation}
-	if _, err := os.Stat("/path/to/whatever"); os.IsNotExist(err) {
+func ProvideRepository() Repository {
+	c := Repository{}
+	if _, err := os.Stat(saveLocation); os.IsNotExist(err) {
+		log.Println("Creating file database")
 		if err := c.writeDatabase(newDatabase()); err != nil {
 			panic(err)
 		}
@@ -26,8 +25,7 @@ func ProvideCartRepository() CartRepository {
 	return c
 }
 
-
-func (c CartRepository) Save(cart *cart.Cart) error {
+func (c Repository) Save(cart *cart.Cart) error {
 	if db, err := c.readDatabase(); err != nil {
 		return err
 	} else {
@@ -36,7 +34,7 @@ func (c CartRepository) Save(cart *cart.Cart) error {
 	}
 }
 
-func (c CartRepository) Find(id string) (*cart.Cart, error) {
+func (c Repository) Find(id string) (*cart.Cart, error) {
 	if db, err := c.readDatabase(); err != nil {
 		return nil, err
 	} else {
@@ -44,9 +42,8 @@ func (c CartRepository) Find(id string) (*cart.Cart, error) {
 	}
 }
 
-
-func (c CartRepository) readDatabase() (*Database, error) {
-	data, err := ioutil.ReadFile(c.saveLocation)
+func (c Repository) readDatabase() (*Database, error) {
+	data, err := ioutil.ReadFile(saveLocation)
 	if err != nil {
 		return nil, fmt.Errorf("could not load cart storage file: %w", err)
 	}
@@ -58,12 +55,12 @@ func (c CartRepository) readDatabase() (*Database, error) {
 	}
 }
 
-func (c CartRepository) writeDatabase(database *Database) error {
+func (c Repository) writeDatabase(database *Database) error {
 	data, err := json.Marshal(database)
 	if err != nil {
 		panic(err)
 	}
-	err = ioutil.WriteFile(c.saveLocation, data, 0644)
+	err = ioutil.WriteFile(saveLocation, data, 0644)
 	if err != nil {
 		return err
 	}

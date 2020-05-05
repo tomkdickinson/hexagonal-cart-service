@@ -1,6 +1,9 @@
 package cart
 
-import "fmt"
+import (
+	"fmt"
+	"log"
+)
 
 type Service struct {
 	repository Repository
@@ -10,7 +13,6 @@ func ProvideService(repository Repository) *Service {
 	return &Service{repository: repository}
 }
 
-//AddItemToCart adds an item to the Cart. If the Cart does not exist, it creates a new Cart instead.
 func (s *Service) AddItemToCart(cartId string, sku string, quantity int) (*Cart, error) {
 	cart, err := s.repository.Find(cartId)
 
@@ -19,6 +21,7 @@ func (s *Service) AddItemToCart(cartId string, sku string, quantity int) (*Cart,
 	}
 
 	if cart == nil {
+		log.Println("No cart in repository, creating new one")
 		cart = NewCart(cartId)
 	}
 
@@ -27,7 +30,6 @@ func (s *Service) AddItemToCart(cartId string, sku string, quantity int) (*Cart,
 	if err = s.repository.Save(cart); err != nil {
 		return nil, fmt.Errorf("could not send Cart updated message: %w", err)
 	}
-
 	return cart, nil
 }
 
