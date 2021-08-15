@@ -5,7 +5,7 @@ package main
 import (
 	"github.com/google/wire"
 	"github.com/tomkdickinson/hexagonal-cart-service/internal/api"
-	"github.com/tomkdickinson/hexagonal-cart-service/internal/cart"
+	"github.com/tomkdickinson/hexagonal-cart-service/internal/domain/cart"
 	"github.com/tomkdickinson/hexagonal-cart-service/internal/storage/file"
 	"github.com/tomkdickinson/hexagonal-cart-service/internal/storage/mongo"
 )

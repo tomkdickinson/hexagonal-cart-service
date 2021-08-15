@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gorilla/mux"
-	"github.com/tomkdickinson/hexagonal-cart-service/internal/cart"
+	"github.com/tomkdickinson/hexagonal-cart-service/internal/domain/cart"
 	"log"
 	"net/http"
 	"strconv"

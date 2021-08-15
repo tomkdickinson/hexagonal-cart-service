@@ -1,6 +1,8 @@
 package file
 
-import "github.com/tomkdickinson/hexagonal-cart-service/internal/cart"
+import (
+	"github.com/tomkdickinson/hexagonal-cart-service/internal/domain/cart"
+)
 
 type Database struct {
 	Carts map[string]Cart
