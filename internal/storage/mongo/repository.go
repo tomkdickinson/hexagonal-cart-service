@@ -3,7 +3,7 @@ package mongo
 import (
 	"context"
 	"fmt"
-	"github.com/tomkdickinson/hexagonal-cart-service/internal/cart"
+	"github.com/tomkdickinson/hexagonal-cart-service/internal/domain/cart"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"

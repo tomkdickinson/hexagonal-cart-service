@@ -1,9 +1,11 @@
 package api
 
-import "github.com/tomkdickinson/hexagonal-cart-service/internal/cart"
+import (
+	"github.com/tomkdickinson/hexagonal-cart-service/internal/domain/cart"
+)
 
 type Cart struct {
-	Id    string            `json:"id"`
+	Id    string         `json:"id"`
 	Items map[string]int `json:"items"`
 }
 

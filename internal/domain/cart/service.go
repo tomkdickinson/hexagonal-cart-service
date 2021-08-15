@@ -36,7 +36,7 @@ func (s *Service) AddItemToCart(cartId string, sku string, quantity int) (*Cart,
 func (s *Service) GetCart(cartId string) (*Cart, error) {
 	if cart, err := s.repository.Find(cartId); err != nil {
 		return nil, fmt.Errorf("error finding cart in repository: %w", err)
-	} else if cart == nil{
+	} else if cart == nil {
 		return NewCart(cartId), nil
 	} else {
 		return cart, nil

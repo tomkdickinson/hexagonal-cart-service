@@ -3,7 +3,7 @@ package file
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/tomkdickinson/hexagonal-cart-service/internal/cart"
+	"github.com/tomkdickinson/hexagonal-cart-service/internal/domain/cart"
 	"io/ioutil"
 	"log"
 	"os"

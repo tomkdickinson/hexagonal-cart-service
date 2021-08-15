@@ -1,6 +1,8 @@
 package mongo
 
-import "github.com/tomkdickinson/hexagonal-cart-service/internal/cart"
+import (
+	"github.com/tomkdickinson/hexagonal-cart-service/internal/domain/cart"
+)
 
 type cartDocument struct {
 	Id    string         `bson:"_id"`
